@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { loadCurrentDay, saveCurrentDay } from './storage'
 import { CurrentDay, Action } from './types'
 import Section from './components/Section'
+import Footer from './components/Footer'
 
 export default function App() {
   const [data, setData] = useState<CurrentDay | null>(null)
@@ -49,6 +50,8 @@ export default function App() {
           onUpdate={updateList('adventures')}
         />
       </main>
+      
+        <Footer player={data.adventurer} />
     </div>
   )
 }

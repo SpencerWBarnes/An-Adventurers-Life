@@ -1,6 +1,7 @@
 import React from 'react'
 import { Action } from '../types'
 import ItemCell from './ItemCell'
+import Tooltip from './Tooltip'
 
 type Props = {
   title: string
@@ -19,7 +20,9 @@ export default function Section({ title, description, actions, onUpdate }: Props
     <section className="section">
       <header className="section-header">
         <h2>{title}</h2>
-        <div className="info" tabIndex={0} title={description}>i</div>
+        <Tooltip content={description}>
+          <button className="info" aria-label={`${title} info`}>i</button>
+        </Tooltip>
       </header>
 
       <div className="grid">

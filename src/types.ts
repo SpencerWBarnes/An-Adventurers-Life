@@ -15,6 +15,8 @@ export interface Action {
   label: string
   price: Currency
   isHighPriority?: boolean
+  // number of times this action was applied today (can be 0 or positive)
+  count?: number
 }
 
 export interface CurrentDay {

@@ -18,7 +18,8 @@ function exampleData(): CurrentDay {
     id: label.toLowerCase().replace(/\s+/g, '-'),
     label,
     price: { focus: f, recovery: r },
-    isHighPriority: isPriority
+    isHighPriority: isPriority,
+    count: 0
   })
 
   return {
