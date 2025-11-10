@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Player } from "../types";
 import { FOCUS_ICON, RECOVERY_ICON } from "../constants";
-import Dialog from "./Dialog";
+import EditPlayerDialog from "./Dialogs/EditPlayerDialog";
 
 type Props = { player: Player; onUpdatePlayer?: (p: Player) => void }
 
@@ -13,7 +13,6 @@ function format(n: number) {
 export default function Footer({ player, onUpdatePlayer }: Props) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState({ name: player.name, focus: player.startOfDayCoin.focus, recovery: player.startOfDayCoin.recovery });
 
   const start = player.startOfDayCoin;
   const gain = player.currentDayGain;
@@ -33,7 +32,6 @@ export default function Footer({ player, onUpdatePlayer }: Props) {
             className="edit-player"
             aria-label="Edit player"
             onClick={() => {
-              setDraft({ name: player.name, focus: player.startOfDayCoin.focus, recovery: player.startOfDayCoin.recovery });
               setEditing(true);
             }}
           >
@@ -57,39 +55,19 @@ export default function Footer({ player, onUpdatePlayer }: Props) {
         </button>
       </div>
 
-      <Dialog
+      <EditPlayerDialog
         open={editing}
-        title="Update Adventurer"
         onClose={() => setEditing(false)}
-        onSave={() => {
-          const next: Player = {
-            ...player,
-            name: draft.name,
-            startOfDayCoin: { focus: Number(draft.focus), recovery: Number(draft.recovery) },
-          };
-
+        player={player}
+        onSave={(next) => {
           if (onUpdatePlayer) {
             onUpdatePlayer(next);
           }
-
           setEditing(false);
         }}
         saveLabel="Save"
         cancelLabel="Cancel"
-      >
-        <label>
-          Name
-          <input value={draft.name} onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))} />
-        </label>
-        <label>
-          Balance of {FOCUS_ICON} at start of day
-          <input type="number" value={draft.focus} onChange={(e) => setDraft((d) => ({ ...d, focus: Number(e.target.value) }))} />
-        </label>
-        <label>
-          Balance of {RECOVERY_ICON} at start of day
-          <input type="number" value={draft.recovery} onChange={(e) => setDraft((d) => ({ ...d, recovery: Number(e.target.value) }))} />
-        </label>
-      </Dialog>
+      />
 
       <div className="footer-details" aria-hidden={!open}>
         <div className="detail-col">

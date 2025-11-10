@@ -3,7 +3,7 @@ import { loadCurrentDay, saveCurrentDay } from "./storage";
 import { CurrentDay, Action } from "./types";
 import Section from "./components/Section";
 import Footer from "./components/Footer";
-import Dialog from "./components/Dialog";
+import LearnMoreDialog from "./components/Dialogs/LearnMoreDialog";
 
 export default function App() {
   const [data, setData] = useState<CurrentDay | null>(null)
@@ -93,15 +93,12 @@ export default function App() {
         <p className="subtitle">Gamify your todos. <button className="learn-more" onClick={() => setLearnOpen(true)}>Learn more</button></p>
       </header>
 
-      <Dialog open={learnOpen} onClose={() => setLearnOpen(false)} title="About An Adventurer's Life" cancelLabel="Close">
-        <p>This app helps you treat tasks like small adventures: earn and spend focus and recovery coins to build a habit loop and make progress fun.</p>
-        <p>Use the counts to track repeated actions and check your net coin in the footer. This dialog has no save button; close when you're done.</p>
-      </Dialog>
+  <LearnMoreDialog open={learnOpen} onClose={() => setLearnOpen(false)} />
 
       <main>
         <Section
           title="Daniel Boon's Shop"
-          description="Spend focus or recovery coins on fun or relaxing boons."
+          description="Spend coins on fun or relaxing boons."
           actions={data.boons}
           onUpdate={updateList("boons")}
         />
