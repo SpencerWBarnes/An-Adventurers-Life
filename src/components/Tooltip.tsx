@@ -1,4 +1,4 @@
-import React, { useState, useId } from 'react'
+import React, { useState, useId } from "react";
 
 type Props = {
   content: string
@@ -12,22 +12,30 @@ export default function Tooltip({ content, children }: Props) {
   return (
     <div
       className="tooltip-wrapper"
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
+      onMouseEnter={() => {
+        setVisible(true);
+      }}
+      onMouseLeave={() => {
+        setVisible(false);
+      }}
     >
       {/** Ensure children can receive focus for keyboard users */}
       {React.isValidElement(children)
         ? React.cloneElement(children as React.ReactElement, {
-            onFocus: () => setVisible(true),
-            onBlur: () => setVisible(false),
-            'aria-describedby': id
+            onFocus: () => {
+              setVisible(true);
+            },
+            onBlur: () => {
+              setVisible(false);
+            },
+            "aria-describedby": id,
           })
         : children}
 
       <div
         id={id}
         role="tooltip"
-        className={`tooltip-box ${visible ? 'tooltip-visible' : ''}`}
+        className={`tooltip-box ${visible ? "tooltip-visible" : ""}`}
         aria-hidden={!visible}
       >
         {content}

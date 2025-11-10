@@ -1,17 +1,26 @@
 :root{
-  --bg: #f8fafc;
+  --bg: #d8d9da;
   --card: #ffffff;
   --muted: #374151; /* darker for better contrast */
   --title: #0f172a; /* section title color */
   --accent: #2563eb;
+  /* safe space at bottom so fixed footer doesn't cover content when scrolled */
+  --footer-safe-space: 40px;
 }
 *{box-sizing:border-box}
 /* Prefer Corbel on platforms that have it; fall back to reliable UI fonts */
-.body{display:block}
 /* Use system UI as the default body font; specific elements will get Google Fonts */
 body{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;margin:0;background:var(--bg);color:#0b1220}
 .app{max-width:1100px;margin:24px auto;padding:16px}
+
+/* Append a spacer at the end of the main app so the fixed footer won't overlap content
+  when the user scrolls to the bottom. The variable allows easy tuning. */
+.app::after{content:"";display:block;height:var(--footer-safe-space);width:100%}
 .app-header h1{margin:0 0 16px 0;font-size:1.75rem;font-family:'Quintessential',cursive}
+/* Subtitle under the main title */
+.app-header .subtitle{margin-bottom:1em;padding-bottom: 1em; font-size:0.95rem;color:var(--muted);font-family:'Aref Ruqaa',serif;border-bottom: 1px solid var(--muted);}
+.app-header .subtitle .learn-more{background:transparent;border:none;color:var(--accent);cursor:pointer;padding:0;font-weight:600;text-decoration:underline;font-family:'Aref Ruqaa',serif}
+.app-header .subtitle .learn-more:hover{text-decoration:none;opacity:0.9}
 main{display:grid;grid-template-columns:1fr;gap:16px}
 
 @media(min-width:900px){
@@ -22,13 +31,21 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .section-header h2{font-size:1.25rem;margin:0;color:var(--title);font-weight:600;font-family:'Quintessential',cursive}
 .tooltip-wrapper{position:relative;display:inline-block}
-.info{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:white;cursor:help;border:none}
+.info{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--accent);cursor:help;border:none;padding:0}
+.info svg{display:block;width:28px;height:28px}
 
 .tooltip-box{position:absolute;right:0;top:110%;min-width:200px;max-width:360px;background:var(--card);color:#111;border:1px solid #e6e9ee;padding:10px;border-radius:8px;box-shadow:0 6px 18px rgba(2,6,23,0.08);opacity:0;transform:translateY(-6px);transition:opacity 150ms ease,transform 150ms ease;pointer-events:none;z-index:30}
 .tooltip-visible{opacity:1;transform:translateY(0);pointer-events:auto}
 .tooltip-arrow{position:absolute;width:12px;height:12px;background:var(--card);transform:rotate(45deg);right:16px;top:-6px;border-left:1px solid #e6e9ee;border-top:1px solid #e6e9ee}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
 .item-cell{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:6px;background:linear-gradient(180deg,#fff,#fbfdff)}
+/* High priority subtle sheen */
+.item-cell.high-priority{position:relative;overflow:hidden;border:1px solid rgba(235, 199, 37, 0.7)}
+/* place the sheen behind the content so it doesn't alter text/input/pill colors */
+.item-cell.high-priority::after{content:"";position:absolute;left:-50%;top:-40%;width:200%;height:120%;background:linear-gradient(20deg,rgba(255, 253, 245, 0.35) 30%,rgba(250, 201, 68, 0.18) 70%,rgba(189, 126, 9, 0.16) 100%);transform:rotate(20deg);opacity:0.65;pointer-events:none;z-index:0}
+.item-cell.high-priority{box-shadow:0 6px 18px rgba(235, 199, 37, 0.08)}
+/* ensure child content sits above the sheen so their colors are preserved */
+.item-cell.high-priority > *{position:relative;z-index:1}
 .controls{display:flex;align-items:center;gap:8px}
 .controls button{width:32px;height:32px;border-radius:6px;border:1px solid #ddd;background:white;cursor:pointer}
 .controls input{width:64px;padding:8px;border:1px solid #e6e9ee;border-radius:6px;text-align:center;font-size:1rem}
@@ -37,9 +54,13 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 /* Price indicators inside each item */
 .price-row{margin-top:8px;display:flex;flex-direction:column;gap:6px}
 .price-values{display:flex;gap:8px;align-items:center}
-.price-pill{font-size:0.9rem;padding:4px 8px;border-radius:999px;background:rgba(15,23,42,0.04);color:var(--title);display:inline-flex;align-items:center;gap:6px}
-.price-pill.recovery{background:rgba(185,28,28,0.06);color:#7f1d1d}
-.price-pill.focus{background:rgba(245,158,11,0.06);color:#92400e}
+.price-pill{font-size:0.9rem;padding:4px 8px;border-radius:999px;background:rgba(15,23,42,0.04);color:var(--title);display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(15,23,42,0.5)}
+.price-pill.recovery{background:rgba(185,28,28,0.06);color:#7f1d1d;border-color:rgba(127,29,29,0.25)}
+.price-pill.focus{background:rgba(245,158,11,0.06);color:#92400e;border-color:rgba(146,64,14,0.25)}
+
+/* Icon inside a pill — allow greyscale when negative */
+.price-pill .pill-icon{display:inline-block;margin-right:6px}
+.price-pill.negative .pill-icon{filter:grayscale(100%);-webkit-filter:grayscale(100%)}
 
 .loading{padding:32px;text-align:center}
 
@@ -47,6 +68,14 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .footer{position:fixed;left:16px;right:16px;bottom:16px;background:var(--card);border-radius:12px;padding:10px 12px;box-shadow:0 8px 30px rgba(2,6,23,0.12);z-index:40;transition:height 180ms ease}
 .footer-row{display:flex;align-items:center;gap:12px}
 .player-name{font-weight:600;margin-right:8px}
+
+/* Footer: inherit the global font (system UI). Player name still uses the header font. */
+.footer, .footer *{font-family:inherit}
+.player-name{font-family:'Quintessential',cursive}
+/* edit pencil button next to player name */
+.player-name .edit-player{margin-left:8px;border:none;background:transparent;cursor:pointer;font-size:0.9rem;padding:4px;border-radius:6px;display:inline-flex;align-items:center}
+.player-name .edit-player svg{display:block}
+.player-name .edit-player:hover{background:rgba(2,6,23,0.04)}
 .player-net{display:flex;gap:12px;margin-left:8px}
 .player-net span{font-size:0.95rem}
 .player-net .net-focus{color:#0b1220}
@@ -60,9 +89,25 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .detail-title{font-size:0.8rem;color:var(--muted);margin-bottom:6px}
 .gain{color:green}
 .loss{color:#b91c1c}
-.detail-net .big{font-size:1.1rem;font-weight:700}
+.big{font-size:1.1rem;font-weight:700}
 
 @media(max-width:700px){
   .footer{left:8px;right:8px;padding:10px}
   .footer-open .footer-details{flex-direction:column}
 }
+
+/* Dialog component styles */
+.dialog-backdrop{position:fixed;left:0;right:0;top:0;bottom:0;background:rgba(2,6,23,0.35);display:flex;align-items:center;justify-content:center;z-index:60}
+.dialog{background:var(--card);padding:18px;border-radius:8px;min-width:320px;max-width:520px;border:1px solid #e6e9ee;box-shadow:0 10px 40px rgba(2,6,23,0.2);position:relative}
+.dialog{font-family:inherit}
+.dialog-title{margin:0 0 12px 0;font-family:'Quintessential',cursive}
+.dialog-body{margin-bottom:12px}
+.dialog label{display:block;margin-bottom:8px;font-size:0.95rem}
+.dialog input{width:100%;padding:8px;border:1px solid #e6e9ee;border-radius:6px;margin-top:6px}
+.dialog-close{position:absolute;top:8px;right:8px;border:none;background:transparent;font-size:14px;color:#6b7280;cursor:pointer;padding:6px;border-radius:6px}
+.dialog-close:hover{background:rgba(2,6,23,0.04)}
+.dialog-actions{display:flex;justify-content:flex-end;gap:8px}
+.save-btn{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);color:#047857;padding:8px 12px;border-radius:6px;cursor:pointer}
+.save-btn:hover{background:rgba(16,185,129,0.14)}
+.cancel-btn{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);color:#991b1b;padding:8px 12px;border-radius:6px;cursor:pointer}
+.cancel-btn:hover{background:rgba(239,68,68,0.12)}

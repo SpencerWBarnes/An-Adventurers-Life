@@ -1,6 +1,6 @@
-import React from 'react'
-import { Action } from '../types'
-import { FOCUS_ICON, RECOVERY_ICON } from '../constants'
+import React from "react";
+import { Action } from "../types";
+import Pill from "./Pill";
 
 type Props = {
   action: Action
@@ -13,17 +13,17 @@ export default function ItemCell({ action, onChange }: Props) {
   const count = action.count ?? 0
 
   const changeCount = (delta: number) => {
-    const next = Math.max(0, count + delta)
-    onChange({ ...action, count: next })
-  }
+    const next = Math.max(0, count + delta);
+    onChange({ ...action, count: next });
+  };
 
   const setCount = (n: number) => {
-    const next = Math.max(0, Math.floor(n || 0))
-    onChange({ ...action, count: next })
-  }
+    const next = Math.max(0, Math.floor(n || 0));
+    onChange({ ...action, count: next });
+  };
 
   return (
-    <div className="item-cell">
+    <div className={`item-cell ${action.isHighPriority ? "high-priority" : ""}`}>
       <div className="controls">
         <div className="control-group count-group">
           <button aria-label={`decrease-count-${action.id}`} onClick={() => changeCount(-1)}>-</button>
@@ -40,10 +40,10 @@ export default function ItemCell({ action, onChange }: Props) {
 
       <div className="label">{action.label}</div>
 
-      <div className="price-row" aria-hidden="true">
+      <div className="price-row" aria-hidden={focus === 0 && recovery === 0}>
         <div className="price-values">
-          <span className="price-pill focus">{FOCUS_ICON} {focus}</span>
-          <span className="price-pill recovery">{RECOVERY_ICON} {recovery}</span>
+          <Pill type="focus" value={focus} />
+          <Pill type="recovery" value={recovery} />
         </div>
       </div>
     </div>
