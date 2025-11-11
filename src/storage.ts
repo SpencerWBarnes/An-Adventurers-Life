@@ -60,7 +60,7 @@ export function loadCurrentDay(): CurrentDay {
  * for late-night adventurers.
  */
 export function isNewDay(savedDate: Date): boolean {
-  let today: string;
+  let today = "";
   const now = new Date();
   if (now.getHours() < 3) {
     const yesterday = new Date(now);
