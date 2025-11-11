@@ -29,7 +29,7 @@ export default function Footer({ player, onUpdatePlayer }: Props) {
         <div className="player-name">
           {player.name}
           <button
-            className="edit-player"
+            className="edit-button"
             aria-label="Edit player"
             onClick={() => {
               setEditing(true);
@@ -51,7 +51,7 @@ export default function Footer({ player, onUpdatePlayer }: Props) {
           aria-label={open ? "Collapse details" : "Expand details"}
           onClick={() => setOpen((s) => !s)}
         >
-          ▾
+          ▼
         </button>
       </div>
 

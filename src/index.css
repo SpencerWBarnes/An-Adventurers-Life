@@ -5,20 +5,21 @@
   --title: #0f172a; /* section title color */
   --accent: #2563eb;
   /* safe space at bottom so fixed footer doesn't cover content when scrolled */
-  --footer-safe-space: 40px;
+  --footer-safe-space: 64px;
 }
 *{box-sizing:border-box}
 /* Prefer Corbel on platforms that have it; fall back to reliable UI fonts */
 /* Use system UI as the default body font; specific elements will get Google Fonts */
 body{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;margin:0;background:var(--bg);color:#0b1220}
-.app{max-width:1100px;margin:24px auto;padding:16px}
+.app{max-width:1100px;margin:0 auto;padding:16px}
 
 /* Append a spacer at the end of the main app so the fixed footer won't overlap content
   when the user scrolls to the bottom. The variable allows easy tuning. */
 .app::after{content:"";display:block;height:var(--footer-safe-space);width:100%}
-.app-header h1{margin:0 0 16px 0;font-size:1.75rem;font-family:'Quintessential',cursive}
+.app-header h1{font-size:1.75rem;font-family:'Quintessential',cursive}
+.app-header .title-row{display:flex;align-items:center;gap:4px}
 /* Subtitle under the main title */
-.app-header .subtitle{margin-bottom:1em;padding-bottom: 1em; font-size:0.95rem;color:var(--muted);font-family:'Aref Ruqaa',serif;border-bottom: 1px solid var(--muted);}
+.app-header .subtitle{margin:0 0 1em 0;padding-bottom: 1em; font-size:0.95rem;color:var(--muted);font-family:'Aref Ruqaa',serif;border-bottom: 1px solid var(--muted);}
 .app-header .subtitle .learn-more{background:transparent;border:none;color:var(--accent);cursor:pointer;padding:0;font-weight:600;text-decoration:underline;font-family:'Aref Ruqaa',serif}
 .app-header .subtitle .learn-more:hover{text-decoration:none;opacity:0.9}
 main{display:grid;grid-template-columns:1fr;gap:16px}
@@ -39,14 +40,14 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .tooltip-arrow{position:absolute;width:12px;height:12px;background:var(--card);transform:rotate(45deg);right:16px;top:-6px;border-left:1px solid #e6e9ee;border-top:1px solid #e6e9ee}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
 .item-cell{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:6px;background:linear-gradient(180deg,#fff,#fbfdff)}
-/* allow absolute-positioned toolbar inside item cell */
-/* .item-cell{position:relative} */
+
 /* Favorites have a sheen */
 .item-cell.favorite{position:relative;overflow:hidden;border:1px solid rgba(235, 199, 37, 0.7)}
 .item-cell.favorite::after{content:"";position:absolute;left:-50%;top:-40%;width:200%;height:120%;background:linear-gradient(20deg,rgba(255, 253, 245, 0.35) 30%,rgba(250, 201, 68, 0.18) 70%,rgba(189, 126, 9, 0.16) 100%);transform:rotate(20deg);opacity:0.65;pointer-events:none;z-index:0}
 .item-cell.favorite{box-shadow:0 6px 18px rgba(235, 199, 37, 0.08)}
 /* ensure child content sits above the sheen so their colors are preserved */
 .item-cell.favorite > *{position:relative;z-index:1}
+.item-cell.add-new{border:1px solid var(--muted);display: flex;align-items:center;justify-content:center;cursor:pointer;}
 .controls{display:flex;align-items:center;gap:8px}
 .label{font-size:1rem;color:var(--muted);font-weight:500;font-family:'Aref Ruqaa',serif}
 
@@ -67,6 +68,12 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .item-toolbar .fav-btn.fav-on{color:#f59e0b}
 .item-toolbar .trash-btn{border:none;background:transparent;padding:6px;border-radius:6px;color:#b91c1c;cursor:pointer}
 .item-toolbar button:hover{background:rgba(2,6,23,0.03)}
+
+/* Edit buttons */
+.edit-button{margin-left:8px;border:none;background:transparent;cursor:pointer;font-size:0.9rem;padding:4px;border-radius:6px;display:inline-flex;align-items:center}
+.edit-button svg{display:block}
+.edit-button:hover{background:rgba(2,6,23,0.04)}
+.edit-button.editing{background:rgba(255,255,255,0.4);border:1px solid var(--muted);}
 
 /* Price indicators inside each item */
 .price-row{margin-top:8px;display:flex;flex-direction:column;gap:6px}
@@ -90,9 +97,6 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .footer, .footer *{font-family:inherit}
 .player-name{font-family:'Quintessential',cursive}
 /* edit pencil button next to player name */
-.player-name .edit-player{margin-left:8px;border:none;background:transparent;cursor:pointer;font-size:0.9rem;padding:4px;border-radius:6px;display:inline-flex;align-items:center}
-.player-name .edit-player svg{display:block}
-.player-name .edit-player:hover{background:rgba(2,6,23,0.04)}
 .player-net{display:flex;gap:12px;margin-left:8px}
 .player-net span{font-size:0.95rem}
 .player-net .net-focus{color:#0b1220}

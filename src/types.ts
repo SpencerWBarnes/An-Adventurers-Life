@@ -14,6 +14,8 @@ export interface Action {
   id: string;
   label: string;
   price: Currency;
+  // index position when viewed in a list
+  order: number;
   isFavorite?: boolean;
   // number of times this action was applied today (can be 0 or positive)
   count?: number;
@@ -24,4 +26,5 @@ export interface CurrentDay {
   boons: Action[];
   encounters: Action[];
   adventures: Action[];
+  todayLocal: Date;
 }

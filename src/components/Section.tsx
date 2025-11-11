@@ -14,13 +14,28 @@ type Props = {
 export default function Section({ title, description, actions, isEditable = false, onUpdate }: Props) {
   const updateAction = (next: Action) => {
     let nextList: Action[];
+    const original = actions.find((a) => a.id === next.id);
+    // Clamp orders to the list bounds, so it matches list indexes
+    if (next.order < 0) {
+      next.order = 0;
+    }
+    if (next.order >= actions.length) {
+      next.order = actions.length - 1;
+    }
+
     // Delete action if it has no name
     if (next.label.trim() === "") {
       nextList = actions.filter((a) => a.id !== next.id);
     }
-    // Otherwise update the action based on its id
-    else {
+    else if (original?.order === next.order) {
+      // No change in order, just update
       nextList = actions.map((a) => (a.id === next.id ? next : a));
+    }
+    else {
+      // Swapping orders
+      const swapPartner = actions.find((a) => a.order === next.order && a.id !== next.id);
+      swapPartner!.order = original!.order;
+      nextList = actions.map((a) => (a.id === next.id ? next : a.id === swapPartner!.id ? swapPartner! : a));
     }
     onUpdate(nextList);
   };
@@ -44,6 +59,21 @@ export default function Section({ title, description, actions, isEditable = fals
         {actions.map((a) => (
           <ItemCell key={a.id} action={a} isEditable={isEditable} onChange={updateAction} />
         ))}
+        {isEditable && (
+          <div className="item-cell add-new" onClick={() => {
+            const newAction: Action = {
+              id: crypto.randomUUID(),
+              label: "New Item",
+              price: { focus: 0, recovery: 0 },
+              count: 0,
+              isFavorite: false,
+              order: actions.length,
+            };
+            onUpdate([...actions, newAction]);
+          }}>
+            + Add New
+          </div>
+        )}
       </div>
     </section>
   )

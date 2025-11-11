@@ -4,12 +4,12 @@ import { CurrentDay, Action } from "./types";
 import Section from "./components/Section";
 import Footer from "./components/Footer";
 import LearnMoreDialog from "./components/Dialogs/LearnMoreDialog";
-import ItemCell from "./components/ItemCells/ItemCell";
-import NumberIncrementor from "./components/NumberIncrementor";
+import { sortActionsByOrder } from "./helpers";
 
 export default function App() {
   const [data, setData] = useState<CurrentDay | null>(null)
   const [learnOpen, setLearnOpen] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     const loaded = loadCurrentDay();
@@ -73,7 +73,7 @@ export default function App() {
         return prev;
       }
 
-      const nextData: CurrentDay = { ...prev, [key]: next };
+      const nextData: CurrentDay = { ...prev, [key]: sortActionsByOrder(next) };
       return recomputeFromActions(nextData);
     });
   };
@@ -91,7 +91,21 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>An Adventurer's Life for Me</h1>
+        <div className="title-row">
+          <h1>An Adventurer's Life for Me</h1>
+          <button
+          className={`edit-button ${editing ? "editing" : ""}`}
+              aria-label="Edit task lists"
+              onClick={() => {
+                setEditing(!editing);
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M3 21v-3l11-11 3 3L7 21H3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" fill="none" />
+                <path d="M14 7l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" fill="none" />
+              </svg>
+            </button>
+          </div>
         <p className="subtitle">Gamify your todos. <button className="learn-more" onClick={() => setLearnOpen(true)}>Learn more</button></p>
       </header>
 
@@ -102,6 +116,7 @@ export default function App() {
           title="Daniel Boon's Shop"
           description="Spend coins on fun or relaxing boons."
           actions={data.boons}
+          isEditable={editing}
           onUpdate={updateList("boons")}
         />
 
@@ -109,6 +124,7 @@ export default function App() {
           title="Encounters"
           description="Gain coin by completing tasks and encounters."
           actions={data.encounters}
+          isEditable={editing}
           onUpdate={updateList("encounters")}
         />
 
@@ -116,6 +132,7 @@ export default function App() {
           title="Adventures"
           description="Gain coin by working towards bigger commitments and quests. Each 45 minute span spent on an adventure counts as one completed action."
           actions={data.adventures}
+          isEditable={editing}
           onUpdate={updateList("adventures")}
         />
       </main>

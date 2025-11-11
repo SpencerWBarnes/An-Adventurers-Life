@@ -31,6 +31,10 @@ export default function EditableItemCell({ action, onChange }: Props) {
     onChange({ ...action, label: "" });
   };
 
+  const updateOrder = (movementDirection: "increment" | "decrement") => {
+    onChange({ ...action, order: movementDirection === "increment" ? action.order + 1 : action.order - 1 });
+  }
+
   return (
     <div className={`item-cell ${action.isFavorite ? "favorite" : ""}`}>
       <div className="item-toolbar">
@@ -61,6 +65,22 @@ export default function EditableItemCell({ action, onChange }: Props) {
           <EditablePill type="focus" value={focus} onChange={setFocusPrice} />
           <EditablePill type="recovery" value={recovery} onChange={setRecoveryPrice} />
         </div>
+      </div>
+      <div className="item-toolbar">
+        <button
+        type="button"
+        onClick={() => updateOrder("decrement")}
+        aria-label="decrement"
+      >
+        ▲
+      </button>
+      <button
+        type="button"
+        onClick={() => updateOrder("increment")}
+        aria-label="increment"
+      >
+        ▼
+      </button>
       </div>
     </div>
   );
