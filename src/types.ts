@@ -14,7 +14,7 @@ export interface Action {
   id: string;
   label: string;
   price: Currency;
-  isHighPriority?: boolean;
+  isFavorite?: boolean;
   // number of times this action was applied today (can be 0 or positive)
   count?: number;
 }

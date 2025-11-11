@@ -4,6 +4,8 @@ import { CurrentDay, Action } from "./types";
 import Section from "./components/Section";
 import Footer from "./components/Footer";
 import LearnMoreDialog from "./components/Dialogs/LearnMoreDialog";
+import ItemCell from "./components/ItemCells/ItemCell";
+import NumberIncrementor from "./components/NumberIncrementor";
 
 export default function App() {
   const [data, setData] = useState<CurrentDay | null>(null)
@@ -93,7 +95,7 @@ export default function App() {
         <p className="subtitle">Gamify your todos. <button className="learn-more" onClick={() => setLearnOpen(true)}>Learn more</button></p>
       </header>
 
-  <LearnMoreDialog open={learnOpen} onClose={() => setLearnOpen(false)} />
+      <LearnMoreDialog open={learnOpen} onClose={() => setLearnOpen(false)} />
 
       <main>
         <Section

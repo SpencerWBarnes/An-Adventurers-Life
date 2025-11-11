@@ -9,11 +9,11 @@ function exampleData(): CurrentDay {
     currentDayLoss: { focus: 0, recovery: 0 },
   };
 
-  const makeAction = (label: string, f: number, r = 0, isPriority = false): Action => ({
+  const makeAction = (label: string, f: number, r = 0, isFavorite = false): Action => ({
     id: label.toLowerCase().replace(/\s+/g, "-"),
     label,
     price: { focus: f, recovery: r },
-    isHighPriority: isPriority,
+    isFavorite: isFavorite,
     count: 0,
   });
 

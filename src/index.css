@@ -39,26 +39,43 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .tooltip-arrow{position:absolute;width:12px;height:12px;background:var(--card);transform:rotate(45deg);right:16px;top:-6px;border-left:1px solid #e6e9ee;border-top:1px solid #e6e9ee}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
 .item-cell{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:6px;background:linear-gradient(180deg,#fff,#fbfdff)}
-/* High priority subtle sheen */
-.item-cell.high-priority{position:relative;overflow:hidden;border:1px solid rgba(235, 199, 37, 0.7)}
-/* place the sheen behind the content so it doesn't alter text/input/pill colors */
-.item-cell.high-priority::after{content:"";position:absolute;left:-50%;top:-40%;width:200%;height:120%;background:linear-gradient(20deg,rgba(255, 253, 245, 0.35) 30%,rgba(250, 201, 68, 0.18) 70%,rgba(189, 126, 9, 0.16) 100%);transform:rotate(20deg);opacity:0.65;pointer-events:none;z-index:0}
-.item-cell.high-priority{box-shadow:0 6px 18px rgba(235, 199, 37, 0.08)}
+/* allow absolute-positioned toolbar inside item cell */
+/* .item-cell{position:relative} */
+/* Favorites have a sheen */
+.item-cell.favorite{position:relative;overflow:hidden;border:1px solid rgba(235, 199, 37, 0.7)}
+.item-cell.favorite::after{content:"";position:absolute;left:-50%;top:-40%;width:200%;height:120%;background:linear-gradient(20deg,rgba(255, 253, 245, 0.35) 30%,rgba(250, 201, 68, 0.18) 70%,rgba(189, 126, 9, 0.16) 100%);transform:rotate(20deg);opacity:0.65;pointer-events:none;z-index:0}
+.item-cell.favorite{box-shadow:0 6px 18px rgba(235, 199, 37, 0.08)}
 /* ensure child content sits above the sheen so their colors are preserved */
-.item-cell.high-priority > *{position:relative;z-index:1}
+.item-cell.favorite > *{position:relative;z-index:1}
 .controls{display:flex;align-items:center;gap:8px}
-.controls button{width:32px;height:32px;border-radius:6px;border:1px solid #ddd;background:white;cursor:pointer}
-.controls input{width:64px;padding:8px;border:1px solid #e6e9ee;border-radius:6px;text-align:center;font-size:1rem}
 .label{font-size:1rem;color:var(--muted);font-weight:500;font-family:'Aref Ruqaa',serif}
+
+/* NumberIncrementor: compact minus / input / plus that look visually connected */
+.number-incrementor{display:inline-flex;align-items:center;font-family:inherit;}
+.number-incrementor .ni-button{display:inline-flex;align-items:center;justify-content:center;height:1.6rem;padding:0 8px;border:1px solid #e6e9ee;background:#fff;color:var(--muted);cursor:pointer;user-select:none}
+.number-incrementor .ni-button:disabled{opacity:0.45;cursor:not-allowed}
+.number-incrementor .ni-decrement{border-radius:6px 0 0 6px}
+.number-incrementor .ni-increment{border-radius:0 6px 6px 0}
+.number-incrementor .ni-input{width:3em;border:none;text-align:center;font-size:1rem;padding:3px 8px;border-top:1px solid #e6e9ee;border-bottom:1px solid #e6e9ee;background:#fff}
+.number-incrementor .ni-button:hover:not(:disabled){background:rgba(2,6,23,0.03)}
+.number-incrementor .ni-button:active:not(:disabled){background:rgba(2,6,23,0.06)}
+
+/* item toolbar: favorite star (left) and trash (right) */
+.item-toolbar{display:flex;align-items:center;justify-content:space-between;pointer-events:auto;z-index:2}
+.item-toolbar .fav-btn{display:inline-flex;align-items:center;gap:6px;border:none;background:transparent;padding:4px 6px;border-radius:6px;color:var(--muted);cursor:pointer}
+.item-toolbar .fav-btn .fav-label{font-size:0.85rem}
+.item-toolbar .fav-btn.fav-on{color:#f59e0b}
+.item-toolbar .trash-btn{border:none;background:transparent;padding:6px;border-radius:6px;color:#b91c1c;cursor:pointer}
+.item-toolbar button:hover{background:rgba(2,6,23,0.03)}
 
 /* Price indicators inside each item */
 .price-row{margin-top:8px;display:flex;flex-direction:column;gap:6px}
-.price-values{display:flex;gap:8px;align-items:center}
+.price-values{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .price-pill{font-size:0.9rem;padding:4px 8px;border-radius:999px;background:rgba(15,23,42,0.04);color:var(--title);display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(15,23,42,0.5)}
 .price-pill.recovery{background:rgba(185,28,28,0.06);color:#7f1d1d;border-color:rgba(127,29,29,0.25)}
 .price-pill.focus{background:rgba(245,158,11,0.06);color:#92400e;border-color:rgba(146,64,14,0.25)}
 
-/* Icon inside a pill — allow greyscale when negative */
+/* Icon inside a pill — allow grayscale when negative */
 .price-pill .pill-icon{display:inline-block;margin-right:6px}
 .price-pill.negative .pill-icon{filter:grayscale(100%);-webkit-filter:grayscale(100%)}
 

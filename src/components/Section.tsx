@@ -1,18 +1,27 @@
 import React from "react";
 import { Action } from "../types";
-import ItemCell from "./ItemCell";
+import ItemCell from "./ItemCells/ItemCell";
 import Tooltip from "./Tooltip";
 
 type Props = {
   title: string
   description: string
   actions: Action[]
+  isEditable?: boolean
   onUpdate: (actions: Action[]) => void
 }
 
-export default function Section({ title, description, actions, onUpdate }: Props) {
+export default function Section({ title, description, actions, isEditable = false, onUpdate }: Props) {
   const updateAction = (next: Action) => {
-    const nextList = actions.map((a) => (a.id === next.id ? next : a));
+    let nextList: Action[];
+    // Delete action if it has no name
+    if (next.label.trim() === "") {
+      nextList = actions.filter((a) => a.id !== next.id);
+    }
+    // Otherwise update the action based on its id
+    else {
+      nextList = actions.map((a) => (a.id === next.id ? next : a));
+    }
     onUpdate(nextList);
   };
 
@@ -33,7 +42,7 @@ export default function Section({ title, description, actions, onUpdate }: Props
 
       <div className="grid">
         {actions.map((a) => (
-          <ItemCell key={a.id} action={a} onChange={updateAction} />
+          <ItemCell key={a.id} action={a} isEditable={isEditable} onChange={updateAction} />
         ))}
       </div>
     </section>
