@@ -122,7 +122,7 @@ export default function App() {
 
         <Section
           title="Encounters"
-          description="Gain coin by completing tasks and encounters."
+          description="Earn coins by completing tasks."
           actions={data.encounters}
           isEditable={editing}
           onUpdate={updateList("encounters")}
@@ -130,14 +130,14 @@ export default function App() {
 
         <Section
           title="Adventures"
-          description="Gain coin by working towards bigger commitments and quests. Each 45 minute span spent on an adventure counts as one completed action."
+          description="Earn coins by working towards bigger goals. Each 45 minute span spent on an adventure counts as one completion."
           actions={data.adventures}
           isEditable={editing}
           onUpdate={updateList("adventures")}
         />
       </main>
       
-        <Footer player={data.adventurer} onUpdatePlayer={updatePlayer} />
+      <Footer player={data.adventurer} onUpdatePlayer={updatePlayer} />
     </div>
   )
 }

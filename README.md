@@ -1,34 +1,63 @@
-# An Adventurer's Life for Me
+# [An Adventurer's Life for Me](https://spencerwbarnes.github.io/An-Adventurers-Life/)
 
-A static web page to gamify chores and tasks to help avoid procrastination and promote task completion.
+This app helps you treat tasks like small adventures and quests: earn and spend coins to build a habit loop and make progress fun.
 
----
+Earn coins by finishing tasks (encounters) or working towards bigger goals (adventures), then spend them on fun or relaxing activities (boons). The lists are fully customizable and stored locally on your browser, perfect for tailoring them to best motivate you.
 
-This project is a small React + TypeScript static app intended to be hosted on GitHub Pages. It reads/writes a `currentDay_AdventurersLife` object to localStorage and renders three dynamic sections:
+## How to Adventure
+
+1. Launch the page at [https://spencerwbarnes.github.io/An-Adventurers-Life/](https://spencerwbarnes.github.io/An-Adventurers-Life/). 
+2. Click '+' on tasks as you complete them, some may only be doable once and others multiple times in a day.
+3. Check your coin balances in the bottom footer
+4. Keep up your task tracking and every day at 3:00 AM your coin balances will be updated and task completions reset for a new day.
+
+### Customization options:
+
+#### Adventurer name
+
+1. Click the pencil edit icon in the footer.
+2. Update your name.
+3. Update your coin balances from the start of the day.
+4. Click 'Save'.
+
+#### Task lists
+
+1. Click the pencil edit icon next to the page title.
+2. Update task names and coin earnings/costs.
+3. Favorite tasks to give them a golden sheen.
+4. Reorder tasks using the '▲' and '▼' arrows.
+5. Delete tasks using the '❌' button.
+6. Add new tasks using the button at the bottom of the list.
+7. Once finished, exit edit mode by clicking the pencil edit icon at the top again.
+
+## Project Documentation
+
+This project is a small React + TypeScript static app intended to be hosted on GitHub Pages. It reads/writes a `currentDay_AdventurersLife` object to localStorage and renders three dynamic task sections:
 
 - Daniel Boon's Shop
 - Encounters
 - Adventures
 
-Each section shows a dynamic grid of items (number input with +/- controls and a label). The project includes a tiny storage helper that seeds example data when localStorage is empty.
+Each section shows a dynamic grid of items which can be customized by clicking the pencil icon next to the page's title. The player stats footer shows the coin balance changes for the current day and can be edited by clicking the pencil icon next in the footer.
 
 Quick start
 
 1. Install dependencies:
 
 ```powershell
-npm install
+npm install --legacy-peer-deps
 ```
 
 2. Run locally:
 
 ```powershell
-npm start
+npm run dev
 ```
 
-3. Build and deploy to GitHub Pages (set `homepage` in `package.json` and create a repo named `An-Adventurers-Life`):
+1. Build and deploy to GitHub Pages:
 
 ```powershell
+npm run build
 npm run deploy
 ```
 
@@ -36,5 +65,4 @@ Files of interest
 
 - `src/types.ts` — domain types (Currency, Player, Action, CurrentDay)
 - `src/storage.ts` — load/save helpers and example seed data
-- `src/components/Section.tsx` and `src/components/ItemCell.tsx` — UI components for the grid
 - `src/App.tsx` — wiring and page layout
