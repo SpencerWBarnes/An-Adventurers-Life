@@ -36,7 +36,7 @@ export default function EditableItemCell({ action, onChange }: Props) {
   }
 
   return (
-    <div className={`item-cell ${action.isFavorite ? "favorite" : ""}`}>
+    <div className={`item-cell ${action.isFavorite ? "favorite" : "standard"}`}>
       <div className="item-toolbar">
         <button
           type="button"

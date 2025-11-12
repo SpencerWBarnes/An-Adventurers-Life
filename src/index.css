@@ -39,7 +39,8 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .tooltip-visible{opacity:1;transform:translateY(0);pointer-events:auto}
 .tooltip-arrow{position:absolute;width:12px;height:12px;background:var(--card);transform:rotate(45deg);right:16px;top:-6px;border-left:1px solid #e6e9ee;border-top:1px solid #e6e9ee}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
-.item-cell{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:6px;background:linear-gradient(180deg,#fff,#fbfdff)}
+.item-cell{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:6px}
+.item-cell.standard{background:linear-gradient(180deg,#fff,#f1f8ff)}
 
 /* Favorites have a sheen */
 .item-cell.favorite{position:relative;overflow:hidden;border:1px solid rgba(235, 199, 37, 0.7)}
@@ -47,6 +48,7 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .item-cell.favorite{box-shadow:0 6px 18px rgba(235, 199, 37, 0.08)}
 /* ensure child content sits above the sheen so their colors are preserved */
 .item-cell.favorite > *{position:relative;z-index:1}
+
 .item-cell.add-new{border:1px solid var(--muted);display: flex;align-items:center;justify-content:center;cursor:pointer;}
 .controls{display:flex;align-items:center;gap:8px}
 .label{font-size:1rem;color:var(--muted);font-weight:500;font-family:'Aref Ruqaa',serif}

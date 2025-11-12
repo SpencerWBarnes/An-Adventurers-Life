@@ -24,7 +24,7 @@ export default function ReadonlyItemCell({ action, onChange }: Props) {
   };
 
   return (
-    <div className={`item-cell ${action.isFavorite ? "favorite" : ""}`}>
+    <div className={`item-cell ${action.isFavorite ? "favorite" : "standard"}`}>
       <div className="controls">
         <NumberIncrementor
           value={count}
