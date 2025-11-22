@@ -1,92 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { loadCurrentDay, saveCurrentDay } from "./storage";
-import { CurrentDay, Action } from "./types";
+import { useState } from "react";
 import Section from "./components/Section";
 import Footer from "./components/Footer";
 import LearnMoreDialog from "./components/Dialogs/LearnMoreDialog";
-import { sortActionsByOrder } from "./helpers";
+import { useCurrentDay } from "./CurrentDayContext";
 
 export default function App() {
-  const [data, setData] = useState<CurrentDay | null>(null)
   const [learnOpen, setLearnOpen] = useState(false);
   const [editing, setEditing] = useState(false);
+  const {
+    isLoading
+  } = useCurrentDay();
 
-  useEffect(() => {
-    const loaded = loadCurrentDay();
-    setData(loaded);
-  }, [])
-
-  useEffect(() => {
-    if (data) {
-      saveCurrentDay(data);
-    }
-  }, [data]);
-
-  if (!data) {
+  if (isLoading) {
     return <div className="loading">Loading...</div>;
   }
-
-  // Recompute currentDayGain and currentDayLoss based on action counts and prices
-  const recomputeFromActions = (currentDay: CurrentDay): CurrentDay => {
-    const gain = { focus: 0, recovery: 0 };
-    const loss = { focus: 0, recovery: 0 };
-
-    const accumulate = (action: Action | undefined) => {
-      if (!action) {
-        return;
-      }
-
-      const count = action.count ?? 0;
-      const focusDelta = (action.price.focus || 0) * count;
-      const recoveryDelta = (action.price.recovery || 0) * count;
-
-      if (focusDelta > 0) {
-        gain.focus += focusDelta;
-      } else {
-        loss.focus += focusDelta;
-      }
-
-      if (recoveryDelta > 0) {
-        gain.recovery += recoveryDelta;
-      } else {
-        loss.recovery += recoveryDelta;
-      }
-    };
-
-    [...currentDay.boons, ...currentDay.encounters, ...currentDay.adventures].forEach((a) => {
-      accumulate(a);
-    });
-
-    return {
-      ...currentDay,
-      adventurer: {
-        ...currentDay.adventurer,
-        currentDayGain: gain,
-        currentDayLoss: loss
-      }
-    };
-  };
-
-  const updateList = (key: "boons" | "encounters" | "adventures") => (next: Action[]) => {
-    setData((prev) => {
-      if (!prev) {
-        return prev;
-      }
-
-      const nextData: CurrentDay = { ...prev, [key]: sortActionsByOrder(next) };
-      return recomputeFromActions(nextData);
-    });
-  };
-
-  const updatePlayer = (nextPlayer: typeof data.adventurer) => {
-    setData((prev) => {
-      if (!prev) {
-        return prev;
-      }
-
-      return { ...prev, adventurer: nextPlayer };
-    });
-  };
 
   return (
     <div className="app">
@@ -114,30 +41,27 @@ export default function App() {
       <main>
         <Section
           title="Daniel Boon's Shop"
+          type="boons"
           description="Spend coins on fun or relaxing boons."
-          actions={data.boons}
           isEditable={editing}
-          onUpdate={updateList("boons")}
         />
 
         <Section
           title="Encounters"
+          type="encounters"
           description="Earn coins by completing tasks."
-          actions={data.encounters}
           isEditable={editing}
-          onUpdate={updateList("encounters")}
         />
 
         <Section
           title="Adventures"
+          type="adventures"
           description="Earn coins by working towards bigger goals. Each 45 minute span spent on an adventure counts as one completion."
-          actions={data.adventures}
           isEditable={editing}
-          onUpdate={updateList("adventures")}
         />
       </main>
       
-      <Footer player={data.adventurer} onUpdatePlayer={updatePlayer} />
+      <Footer />
     </div>
   )
 }

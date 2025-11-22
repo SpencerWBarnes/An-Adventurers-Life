@@ -1,13 +1,14 @@
-import React from "react";
 import { Action } from "../../types";
 import EditablePill from "../EditablePill";
 
 type Props = {
   action: Action;
   onChange: (next: Action) => void;
+  onDelete: (id: string) => void;
+  onReorder: (target: Action, direction: 'earlier' | 'later') => void;
 };
 
-export default function EditableItemCell({ action, onChange }: Props) {
+export default function EditableItemCell({ action, onChange, onDelete, onReorder }: Props) {
   const { focus, recovery } = action.price;
 
   const setLabel = (nextLabel: string) => {
@@ -26,15 +27,6 @@ export default function EditableItemCell({ action, onChange }: Props) {
     onChange({ ...action, isFavorite: !action.isFavorite });
   };
 
-  const handleDelete = () => {
-    // Removing the label indicates to the list updater that the item should be deleted.
-    onChange({ ...action, label: "" });
-  };
-
-  const updateOrder = (movementDirection: "increment" | "decrement") => {
-    onChange({ ...action, order: movementDirection === "increment" ? action.order + 1 : action.order - 1 });
-  }
-
   return (
     <div className={`item-cell ${action.isFavorite ? "favorite" : "standard"}`}>
       <div className="item-toolbar">
@@ -51,7 +43,7 @@ export default function EditableItemCell({ action, onChange }: Props) {
           <span className="fav-label">Favorite</span>
         </button>
 
-        <button type="button" className="trash-btn" onClick={handleDelete} aria-label="Delete">
+        <button type="button" className="trash-btn" onClick={() => onDelete(action.id)} aria-label="Delete">
           ❌
         </button>
       </div>
@@ -69,14 +61,14 @@ export default function EditableItemCell({ action, onChange }: Props) {
       <div className="item-toolbar">
         <button
         type="button"
-        onClick={() => updateOrder("decrement")}
+        onClick={() => onReorder(action, "earlier")}
         aria-label="decrement"
       >
         ▲
       </button>
       <button
         type="button"
-        onClick={() => updateOrder("increment")}
+        onClick={() => onReorder(action, "later")}
         aria-label="increment"
       >
         ▼

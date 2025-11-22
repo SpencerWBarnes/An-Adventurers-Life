@@ -6,7 +6,7 @@ Earn coins by finishing tasks (encounters) or working towards bigger goals (adve
 
 ## How to Adventure
 
-1. Launch the page at [https://spencerwbarnes.github.io/An-Adventurers-Life/](https://spencerwbarnes.github.io/An-Adventurers-Life/). 
+1. Launch the page at [https://spencerwbarnes.github.io/An-Adventurers-Life/](https://spencerwbarnes.github.io/An-Adventurers-Life/) 
 2. Click '+' on tasks as you complete them, some may only be doable once and others multiple times in a day.
 3. Check your coin balances in the bottom footer
 4. Keep up your task tracking and every day at 3:00 AM your coin balances will be updated and task completions reset for a new day.
@@ -64,5 +64,18 @@ npm run deploy
 Files of interest
 
 - `src/types.ts` — domain types (Currency, Player, Action, CurrentDay)
-- `src/storage.ts` — load/save helpers and example seed data
+- `src/storage.ts` — load & save session data helpers 
 - `src/App.tsx` — wiring and page layout
+- `src/exampleData.ts` - default data and example of valid objects
+- `src/CurrentDayContext.tsx` - central authority for shared data, handling read & write to session storage and data updates
+- `src/components/Dialogs` - various popup dialogs/modals used
+
+Component hierarchy
+
+- CurrentDayProvider
+  - App
+    - Sections (Can add new action items)
+      - ItemCells
+        - ReadonlyItemCells (Can update counts for action items)
+        - EditableItemCells (Can delete action items or update label, favorite status, prices, and order of action items)
+    - Footer (Can modify Player data)

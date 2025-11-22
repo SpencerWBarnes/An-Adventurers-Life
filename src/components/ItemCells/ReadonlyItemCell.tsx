@@ -1,4 +1,3 @@
-import React from "react";
 import { Action } from "../../types";
 import Pill from "../Pill";
 import NumberIncrementor from "../NumberIncrementor";
@@ -12,11 +11,6 @@ export default function ReadonlyItemCell({ action, onChange }: Props) {
   const { focus, recovery } = action.price;
 
   const count = action.count ?? 0;
-
-  const changeCount = (delta: number) => {
-    const next = Math.max(0, count + delta);
-    onChange({ ...action, count: next });
-  };
 
   const setCount = (n: number) => {
     const next = Math.max(0, Math.floor(n || 0));

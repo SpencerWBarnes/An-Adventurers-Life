@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Dialog from "./Dialog";
 import { Player } from "../../types";
 import { FOCUS_ICON, RECOVERY_ICON } from "../../constants";

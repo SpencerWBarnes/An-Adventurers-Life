@@ -1,22 +1,31 @@
-import React, { useState } from "react";
-import { Player } from "../types";
-import { FOCUS_ICON, RECOVERY_ICON } from "../constants";
+import { useMemo, useState } from "react";
+import { EMPTY_CURRENCY, FOCUS_ICON, RECOVERY_ICON } from "../constants";
 import EditPlayerDialog from "./Dialogs/EditPlayerDialog";
-
-type Props = { player: Player; onUpdatePlayer?: (p: Player) => void }
+import { useCurrentDay } from "../CurrentDayContext";
+import { EXAMPLE_PLAYER } from "../exampleData";
 
 function format(n: number) {
   const sign = n > 0 ? "+" : "";
   return `${sign}${n}`;
 }
 
-export default function Footer({ player, onUpdatePlayer }: Props) {
+export default function Footer() {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(false);
+  const {
+    currentDay,
+    updatePlayer,
+  } = useCurrentDay();
 
-  const start = player.startOfDayCoin;
-  const gain = player.currentDayGain;
-  const loss = player.currentDayLoss;
+  const player = useMemo(() => {
+    if (!currentDay) {
+      return EXAMPLE_PLAYER();
+    }
+    return currentDay.adventurer;
+  }, [currentDay]);
+  const start = player?.startOfDayCoin ?? EMPTY_CURRENCY();
+  const gain = player?.currentDayGain ?? EMPTY_CURRENCY();
+  const loss = player?.currentDayLoss ?? EMPTY_CURRENCY();
 
   const net = {
     focus: start.focus + gain.focus + loss.focus,
@@ -60,9 +69,7 @@ export default function Footer({ player, onUpdatePlayer }: Props) {
         onClose={() => setEditing(false)}
         player={player}
         onSave={(next) => {
-          if (onUpdatePlayer) {
-            onUpdatePlayer(next);
-          }
+          updatePlayer(next);
           setEditing(false);
         }}
         saveLabel="Save"

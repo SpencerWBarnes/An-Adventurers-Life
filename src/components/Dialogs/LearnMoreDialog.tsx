@@ -1,4 +1,3 @@
-import React from "react";
 import Dialog from "./Dialog";
 import { FOCUS_ICON, RECOVERY_ICON } from "../../constants";
 

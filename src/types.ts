@@ -28,3 +28,5 @@ export interface CurrentDay {
   adventures: Action[];
   todayLocal: Date;
 }
+
+export type ActionType = 'boons' | 'encounters' | 'adventures';

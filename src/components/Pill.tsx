@@ -1,4 +1,3 @@
-import React from "react";
 import { FOCUS_ICON, RECOVERY_ICON } from "../constants";
 
 export type PillType = "focus" | "recovery";
