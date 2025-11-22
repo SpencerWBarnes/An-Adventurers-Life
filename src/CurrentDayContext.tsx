@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { Action, ActionType, CurrentDay, Player } from "./types";
 import { loadCurrentDay, saveCurrentDay } from "./storage";
-import { cashOutDay, isNewDay, recalculateBalances } from "./helpers";
+import { cashOutDay, isNewDay, recalculateBalances, sortDayActions } from "./helpers";
 import { EMPTY_CURRENCY } from "./constants";
 
 interface CurrentDayContextType {
@@ -21,6 +21,7 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    // console.log("Loading current day data on mount");
     setIsLoading(true);
     const loadedDay = loadCurrentDay();
     // Cash out if it's a new day
@@ -33,16 +34,23 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
     setIsLoading(false);
   }, []);
 
-  // Every time currentDay changes: check for new day
-  useEffect(() => {
-    if (currentDay) {
-      // If it's a new day, cash out the previous day
-      if (isNewDay(currentDay.todayLocal)) {
-        const cashedOutDay = cashOutDay(currentDay);
-        saveCurrentDay(cashedOutDay);
-      }
+
+  /**
+   * Process and recalculate data to ensure consistency and integrity.
+   * This is not optimized, however data size is small enough that this is not an issue.
+   * @param data Data to process
+   * @returns Fully updated and accurate data
+   */
+  const processData = (data: CurrentDay): CurrentDay => {
+    // Propagate any calculations and orderings
+    const recalculatedDay = recalculateBalances(data);
+    const sortedDay = sortDayActions(recalculatedDay);
+    // If it's a new day, cash out the previous day
+    if (isNewDay(sortedDay.todayLocal)) {
+      return cashOutDay(sortedDay);
     }
-  }, [currentDay]);
+    return sortedDay;
+  }
 
   /**
    * Update current day data in state and storage
@@ -50,7 +58,8 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
    * @returns Most recent saved current day data
    */
   const updateCurrentDay = (updatedDay: CurrentDay): CurrentDay => {
-    const savedDay = saveCurrentDay(updatedDay);
+    // console.log("Updating current day data", updatedDay);
+    const savedDay = saveCurrentDay(processData(updatedDay));
     setCurrentDay(savedDay);
     return savedDay;
   }
@@ -61,6 +70,7 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
    * @returns The modified action list
    */
   const createAction = (type: ActionType): Action[] => {
+    // console.log("Creating new action in", type);
     if (!currentDay) {
       console.error("Current day data is not loaded");
       throw new Error("Current day data is not loaded");
@@ -99,6 +109,7 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
    * @returns The modified action list
    */
   const deleteAction = (type: ActionType, id: string): Action[] => {
+    // console.log("Deleting action", id, "from", type);
     if (!currentDay) {
       console.error("Current day data is not loaded");
       throw new Error("Current day data is not loaded");
@@ -126,6 +137,7 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
    * @returns The modified action list
    */
   const updateAction = (type: ActionType, updatedAction: Action): Action[] => {
+    // console.log("Updating action", updatedAction.id, "in", type);
     if (!currentDay) {
       console.error("Current day data is not loaded");
       throw new Error("Current day data is not loaded");
@@ -142,10 +154,8 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
         currentDay.adventures = currentDay.adventures.map(a => a.id === updatedAction.id ? updatedAction : a);
         break;
     }
-    // Recalculate balances after updating any actions
-    const recalculatedBalances = recalculateBalances(currentDay);
     // Save the change and return the updated list
-    return updateCurrentDay(recalculatedBalances)[type];
+    return updateCurrentDay(currentDay)[type];
   }
 
   /**
@@ -154,6 +164,7 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
    * @returns 
    */
   const updatePlayer = (player: Player): Player => {
+    // console.log("Updating player data", player);
     if (!currentDay) {
       console.error("Current day data is not loaded");
       throw new Error("Current day data is not loaded");
@@ -171,6 +182,7 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
    * @returns The modified list, no change if attempting to move out of bounds
    */
   const reorderActionList = (type: ActionType, updatedAction: Action, direction: 'earlier' | 'later'): Action[] => {
+    // console.log("Reordering action", updatedAction.id, "in", type, "to", direction);
     if (!currentDay) {
       console.error("Current day data is not loaded");
       throw new Error("Current day data is not loaded");

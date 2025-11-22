@@ -19,6 +19,7 @@ export const sortActionsByOrder = (actions: Action[]): Action[] => {
  * @returns Day with Boons, Encounters, and Adventures sorted by order
  */
 export const sortDayActions = (day: CurrentDay): CurrentDay => {
+  // console.log("Sorting day actions by order", day);
   return {
     ...day,
     boons: sortActionsByOrder(day.boons),
@@ -58,6 +59,7 @@ export function isNewDay(savedDate: Date): boolean {
  * @returns Day with reset balances and action counts
  */
 export function cashOutDay(currentDay: CurrentDay): CurrentDay {
+  // console.log("Cashing out day", currentDay);
   const endOfDayFocus = currentDay.adventurer.startOfDayCoin.focus + currentDay.adventurer.currentDayGain.focus + currentDay.adventurer.currentDayLoss.focus;
   const endOfDayRecovery = currentDay.adventurer.startOfDayCoin.recovery + currentDay.adventurer.currentDayGain.recovery + currentDay.adventurer.currentDayLoss.recovery;
 
@@ -81,6 +83,7 @@ export function cashOutDay(currentDay: CurrentDay): CurrentDay {
  * @returns Day with recalculated values based on action counts and prices
  */
 export function recalculateBalances(day: CurrentDay): CurrentDay {
+  // console.log("Recalculating balances for day", day);
   const gain = { focus: 0, recovery: 0 };
   const loss = { focus: 0, recovery: 0 };
 

@@ -1,6 +1,5 @@
 import { STORAGE_KEY } from "./constants";
 import { EXAMPLE_DATA } from "./exampleData";
-import { sortDayActions } from "./helpers";
 import { CurrentDay } from "./types";
 
 export function loadCurrentDay(): CurrentDay {
@@ -12,6 +11,7 @@ export function loadCurrentDay(): CurrentDay {
       return saveCurrentDay(ex);
     }
     // Parse and return stored data
+    // console.log("Loading current day data from storage", raw);
     return JSON.parse(raw) as CurrentDay;
   } catch (e) {
     // On error, save and return example data
@@ -21,13 +21,13 @@ export function loadCurrentDay(): CurrentDay {
 }
 
 /**
- * Save current day data to local storage, sorting and updating the timestamp
+ * Save current day data to local storage, updating the timestamp
  * @param data
- * @return The saved data with updated sorting and timestamp
+ * @return The saved data with updated timestamp
  */
 export function saveCurrentDay(data: CurrentDay): CurrentDay {
   data.todayLocal = new Date();
-  data = sortDayActions(data);
+  // console.log("Saving current day data to storage", data);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   return data;
 }
