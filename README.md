@@ -76,9 +76,9 @@ npm run deploy
 - CurrentDayProvider
   - App
     - Sections (Can add new action items)
-      - ItemCells
-        - ReadonlyItemCells (Can update counts for action items)
-        - EditableItemCells (Can delete action items or update label, favorite status, prices, and order of action items)
+      - ItemCards
+        - ReadonlyItemCards (Can update counts for action items)
+        - EditableItemCards (Can delete action items or update label, favorite status, prices, and order of action items)
     - Footer (Can modify Player data)
 
 ## Attributions
