@@ -61,7 +61,7 @@ npm run build
 npm run deploy
 ```
 
-Files of interest
+### Files of interest
 
 - `src/types.ts` — domain types (Currency, Player, Action, CurrentDay)
 - `src/storage.ts` — load & save session data helpers 
@@ -69,8 +69,9 @@ Files of interest
 - `src/exampleData.ts` - default data and example of valid objects
 - `src/CurrentDayContext.tsx` - central authority for shared data, handling read & write to session storage and data updates
 - `src/components/Dialogs` - various popup dialogs/modals used
+- `assets` - store static files like images 
 
-Component hierarchy
+### Component hierarchy
 
 - CurrentDayProvider
   - App
@@ -79,3 +80,9 @@ Component hierarchy
         - ReadonlyItemCards (Can update counts for action items)
         - EditableItemCards (Can delete action items or update label, favorite status, prices, and order of action items)
     - Footer (Can modify Player data)
+
+## Attributions
+
+### Icons
+
+Favicons are courtesy of [icons8.com](https://icons8.com/)
