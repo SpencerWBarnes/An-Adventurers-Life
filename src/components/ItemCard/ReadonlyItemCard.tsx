@@ -27,16 +27,14 @@ export default function ReadonlyItemCard({ action, onChange }: Props) {
           step={1}
           ariaLabel={`count-${action.id}`}
         />
-      </div>
 
-      <div className="label">{action.label}</div>
-
-      <div className="price-row" aria-hidden={focus === 0 && recovery === 0}>
-        <div className="price-values">
+        <div className="price-row" aria-hidden={focus === 0 && recovery === 0}>
           <Pill type="focus" value={focus} />
           <Pill type="recovery" value={recovery} />
         </div>
       </div>
+
+      <div className="label">{action.label}</div>
     </div>
   );
 }

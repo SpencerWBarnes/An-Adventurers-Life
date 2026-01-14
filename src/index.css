@@ -38,13 +38,13 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .tooltip-box{position:absolute;right:0;top:110%;min-width:200px;max-width:360px;background:var(--card);color:#111;border:1px solid #e6e9ee;padding:10px;border-radius:8px;box-shadow:0 6px 18px rgba(2,6,23,0.08);opacity:0;transform:translateY(-6px);transition:opacity 150ms ease,transform 150ms ease;pointer-events:none;z-index:30}
 .tooltip-visible{opacity:1;transform:translateY(0);pointer-events:auto}
 .tooltip-arrow{position:absolute;width:12px;height:12px;background:var(--card);transform:rotate(45deg);right:16px;top:-6px;border-left:1px solid #e6e9ee;border-top:1px solid #e6e9ee}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .item-card{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:6px}
 .item-card.standard{background:linear-gradient(180deg,#fff,#f1f8ff)}
 
 /* Favorites have a sheen */
 .item-card.favorite{position:relative;overflow:hidden;border:1px solid rgba(235, 199, 37, 0.7)}
-.item-card.favorite::after{content:"";position:absolute;left:-50%;top:-40%;width:200%;height:120%;background:linear-gradient(20deg,rgba(255, 253, 245, 0.35) 30%,rgba(250, 201, 68, 0.18) 70%,rgba(189, 126, 9, 0.16) 100%);transform:rotate(20deg);opacity:0.65;pointer-events:none;z-index:0}
+.item-card.favorite::after{content:"";position:absolute;left:-50%;top:-85%;width:175%;height:185%;background:linear-gradient(20deg,rgba(255, 253, 245, 0.35) 30%,rgba(250, 201, 68, 0.18) 70%,rgba(189, 126, 9, 0.16) 100%);transform:rotate(20deg);opacity:0.65;pointer-events:none;z-index:0}
 .item-card.favorite{box-shadow:0 6px 18px rgba(235, 199, 37, 0.08)}
 /* ensure child content sits above the sheen so their colors are preserved */
 .item-card.favorite > *{position:relative;z-index:1}
@@ -78,8 +78,7 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .edit-button.editing{background:rgba(255,255,255,0.4);border:1px solid var(--muted);}
 
 /* Price indicators inside each item */
-.price-row{margin-top:8px;display:flex;flex-direction:column;gap:6px}
-.price-values{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.price-row{display:flex;gap:8px;flex-wrap:wrap;}
 .price-pill{font-size:0.9rem;padding:4px 8px;border-radius:999px;background:rgba(15,23,42,0.04);color:var(--title);display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(15,23,42,0.5)}
 .price-pill.recovery{background:rgba(185,28,28,0.06);color:#7f1d1d;border-color:rgba(127,29,29,0.25)}
 .price-pill.focus{background:rgba(245,158,11,0.06);color:#92400e;border-color:rgba(146,64,14,0.25)}
