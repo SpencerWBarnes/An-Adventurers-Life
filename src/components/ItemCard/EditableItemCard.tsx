@@ -8,7 +8,7 @@ type Props = {
   onReorder: (target: Action, direction: 'earlier' | 'later') => void;
 };
 
-export default function EditableItemCell({ action, onChange, onDelete, onReorder }: Props) {
+export default function EditableItemCard({ action, onChange, onDelete, onReorder }: Props) {
   const { focus, recovery } = action.price;
 
   const setLabel = (nextLabel: string) => {

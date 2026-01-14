@@ -39,17 +39,17 @@ main{display:grid;grid-template-columns:1fr;gap:16px}
 .tooltip-visible{opacity:1;transform:translateY(0);pointer-events:auto}
 .tooltip-arrow{position:absolute;width:12px;height:12px;background:var(--card);transform:rotate(45deg);right:16px;top:-6px;border-left:1px solid #e6e9ee;border-top:1px solid #e6e9ee}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
-.item-cell{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:6px}
-.item-cell.standard{background:linear-gradient(180deg,#fff,#f1f8ff)}
+.item-card{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:6px}
+.item-card.standard{background:linear-gradient(180deg,#fff,#f1f8ff)}
 
 /* Favorites have a sheen */
-.item-cell.favorite{position:relative;overflow:hidden;border:1px solid rgba(235, 199, 37, 0.7)}
-.item-cell.favorite::after{content:"";position:absolute;left:-50%;top:-40%;width:200%;height:120%;background:linear-gradient(20deg,rgba(255, 253, 245, 0.35) 30%,rgba(250, 201, 68, 0.18) 70%,rgba(189, 126, 9, 0.16) 100%);transform:rotate(20deg);opacity:0.65;pointer-events:none;z-index:0}
-.item-cell.favorite{box-shadow:0 6px 18px rgba(235, 199, 37, 0.08)}
+.item-card.favorite{position:relative;overflow:hidden;border:1px solid rgba(235, 199, 37, 0.7)}
+.item-card.favorite::after{content:"";position:absolute;left:-50%;top:-40%;width:200%;height:120%;background:linear-gradient(20deg,rgba(255, 253, 245, 0.35) 30%,rgba(250, 201, 68, 0.18) 70%,rgba(189, 126, 9, 0.16) 100%);transform:rotate(20deg);opacity:0.65;pointer-events:none;z-index:0}
+.item-card.favorite{box-shadow:0 6px 18px rgba(235, 199, 37, 0.08)}
 /* ensure child content sits above the sheen so their colors are preserved */
-.item-cell.favorite > *{position:relative;z-index:1}
+.item-card.favorite > *{position:relative;z-index:1}
 
-.item-cell.add-new{border:1px solid var(--muted);display: flex;align-items:center;justify-content:center;cursor:pointer;}
+.item-card.add-new{border:1px solid var(--muted);display: flex;align-items:center;justify-content:center;cursor:pointer;}
 .controls{display:flex;align-items:center;gap:8px}
 .label{font-size:1rem;color:var(--muted);font-weight:500;font-family:'Aref Ruqaa',serif}
 

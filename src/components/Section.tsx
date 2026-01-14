@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Action, ActionType } from "../types";
-import ItemCell from "./ItemCells/ItemCell";
+import ItemCard from "./ItemCard/ItemCard";
 import Tooltip from "./Tooltip";
 import { useCurrentDay } from "../CurrentDayContext";
 
@@ -56,10 +56,10 @@ export default function Section({ title, type, description, isEditable = false }
 
       <div className="grid">
         {actions.map((a) => (
-          <ItemCell key={a.id} action={a} isEditable={isEditable} onChange={onChange} onDelete={onDelete} onReorder={onReorder} />
+          <ItemCard key={a.id} action={a} isEditable={isEditable} onChange={onChange} onDelete={onDelete} onReorder={onReorder} />
         ))}
         {isEditable && (
-          <div className="item-cell add-new" onClick={() => {
+          <div className="item-card add-new" onClick={() => {
             createAction(type);
           }}>
             + Add New

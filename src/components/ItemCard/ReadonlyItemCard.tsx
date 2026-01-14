@@ -7,7 +7,7 @@ type Props = {
   onChange: (next: Action) => void;
 };
 
-export default function ReadonlyItemCell({ action, onChange }: Props) {
+export default function ReadonlyItemCard({ action, onChange }: Props) {
   const { focus, recovery } = action.price;
 
   const count = action.count ?? 0;
@@ -18,7 +18,7 @@ export default function ReadonlyItemCell({ action, onChange }: Props) {
   };
 
   return (
-    <div className={`item-cell ${action.isFavorite ? "favorite" : "standard"}`}>
+    <div className={`item-card ${action.isFavorite ? "favorite" : "standard"}`}>
       <div className="controls">
         <NumberIncrementor
           value={count}
