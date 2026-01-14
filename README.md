@@ -80,3 +80,9 @@ npm run deploy
         - ReadonlyItemCells (Can update counts for action items)
         - EditableItemCells (Can delete action items or update label, favorite status, prices, and order of action items)
     - Footer (Can modify Player data)
+
+## Attributions
+
+### Icons
+
+Favicons are courtesy of [icons8.com](https://icons8.com/)
