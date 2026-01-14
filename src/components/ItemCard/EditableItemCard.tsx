@@ -48,16 +48,15 @@ export default function EditableItemCard({ action, onChange, onDelete, onReorder
         </button>
       </div>
 
+      <div className="price-row">
+        <EditablePill type="focus" value={focus} onChange={setFocusPrice} />
+        <EditablePill type="recovery" value={recovery} onChange={setRecoveryPrice} />
+      </div>
+      
       <div className="label">
         <input value={action.label} onChange={(e) => setLabel(e.target.value)} />
       </div>
 
-      <div className="price-row">
-        <div className="price-values">
-          <EditablePill type="focus" value={focus} onChange={setFocusPrice} />
-          <EditablePill type="recovery" value={recovery} onChange={setRecoveryPrice} />
-        </div>
-      </div>
       <div className="item-toolbar">
         <button
         type="button"
