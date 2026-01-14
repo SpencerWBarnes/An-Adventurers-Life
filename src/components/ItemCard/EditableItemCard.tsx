@@ -28,7 +28,7 @@ export default function EditableItemCard({ action, onChange, onDelete, onReorder
   };
 
   return (
-    <div className={`item-cell ${action.isFavorite ? "favorite" : "standard"}`}>
+    <div className={`item-card ${action.isFavorite ? "favorite" : "standard"}`}>
       <div className="item-toolbar">
         <button
           type="button"
