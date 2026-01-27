@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Section from "./components/Section";
+import TabsPane from "./components/TabsPane";
 import Footer from "./components/Footer";
 import LearnMoreDialog from "./components/Dialogs/LearnMoreDialog";
 import { useCurrentDay } from "./CurrentDayContext";
@@ -37,26 +37,7 @@ export default function App() {
       <LearnMoreDialog open={learnOpen} onClose={() => setLearnOpen(false)} />
 
       <main>
-        <Section
-          title="Daniel Boon's Shop"
-          type="boons"
-          description="Spend coins on fun or relaxing boons."
-          isEditable={editing}
-        />
-
-        <Section
-          title="Encounters"
-          type="encounters"
-          description="Earn coins by completing tasks."
-          isEditable={editing}
-        />
-
-        <Section
-          title="Adventures"
-          type="adventures"
-          description="Earn coins by working towards bigger goals. Each 45 minute span spent on an adventure counts as one completion."
-          isEditable={editing}
-        />
+        <TabsPane isEditable={editing} />
       </main>
       
       <Footer />

@@ -40,6 +40,8 @@ This project is a small React + TypeScript static app intended to be hosted on G
 
 Each section shows a dynamic grid of items which can be customized by clicking the pencil icon next to the page's title. The player stats footer shows the coin balance changes for the current day and can be edited by clicking the pencil icon next in the footer.
 
+If the page width is 900 pixels or higher, the three sections are shown as three separate columns. If the page width is smaller than that, then a tab bar appears with three tabs each correlating to one of the sections with only the currently selected section appearing below the tab bar.
+
 Quick start
 
 1. Install dependencies:
