@@ -5,14 +5,25 @@ import Tooltip from "./Tooltip";
 import { useCurrentDay } from "../CurrentDayContext";
 import InformationIcon from "./Icons/InformationIcon";
 
-type Props = {
+type HeaderedProps = {
   title: string
   type: ActionType
   description: string
   isEditable?: boolean
 }
 
-export default function Section({ title, type, description, isEditable = false }: Props) {
+type HeaderlessProps = {
+  type: ActionType
+  isEditable?: boolean
+}
+
+export default function Section(props: HeaderedProps | HeaderlessProps) {
+  const isHeaderless = (props as any).title === undefined;
+  const title = isHeaderless ? "" : (props as HeaderedProps).title;
+  const description = isHeaderless ? "" : (props as HeaderedProps).description;
+  const type = props.type;
+  const isEditable = props.isEditable || false;
+
   const {
     currentDay,
     createAction,
@@ -41,15 +52,17 @@ export default function Section({ title, type, description, isEditable = false }
   }
 
   return (
-    <section className="section">
-      <header className="section-header">
-        <h2>{title}</h2>
-        <Tooltip content={description}>
-          <button className="info" aria-label={`${title} info`}>
-            <InformationIcon />
-          </button>
-        </Tooltip>
-      </header>
+    <section className={`section ${isHeaderless ? "headerless" : ""}`}>
+      {!isHeaderless && (
+        <header className="section-header">
+          <h2>{title}</h2>
+          <Tooltip content={description}>
+            <button className="info" aria-label={`${title} info`}>
+              <InformationIcon />
+            </button>
+          </Tooltip>
+        </header>
+      )}
 
       <div className="grid">
         {actions.map((a) => (

@@ -14,7 +14,7 @@ interface TabConfig {
 const tabs: TabConfig[] = [
   {
     id: "boons",
-    label: "Daniel Boon's Shop",
+    label: "Boons",
     title: "Daniel Boon's Shop",
     description: "Spend coins on fun or relaxing boons.",
   },
@@ -55,7 +55,7 @@ export default function TabsPane({ isEditable }: Props) {
         <Tabs.List className="tabs-list">
           {tabs.map((tab) => (
             <Tabs.Tab key={tab.id} value={tab.id} className="tabs-tab">
-              {tab.label}
+              <h2>{tab.label}</h2>
             </Tabs.Tab>
           ))}
           <Tabs.Indicator className="tabs-indicator" />
@@ -63,9 +63,7 @@ export default function TabsPane({ isEditable }: Props) {
         {tabs.map((tab) => (
           <Tabs.Panel key={tab.id} value={tab.id} className="tabs-panel">
             <Section
-              title={tab.title}
               type={tab.id}
-              description={tab.description}
               isEditable={isEditable}
             />
           </Tabs.Panel>
