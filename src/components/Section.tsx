@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { Action, ActionType } from "../types";
-import ItemCard from "./ItemCard/ItemCard";
+import ItemCard from "./ItemCards/ItemCard";
 import Tooltip from "./Tooltip";
 import { useCurrentDay } from "../CurrentDayContext";
+import InformationIcon from "./Icons/InformationIcon";
 
 type Props = {
   title: string
@@ -45,11 +46,7 @@ export default function Section({ title, type, description, isEditable = false }
         <h2>{title}</h2>
         <Tooltip content={description}>
           <button className="info" aria-label={`${title} info`}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="12" cy="16" r="0.75" fill="currentColor" />
-            </svg>
+            <InformationIcon />
           </button>
         </Tooltip>
       </header>
