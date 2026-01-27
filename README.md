@@ -6,10 +6,11 @@ Earn coins by finishing tasks (encounters) or working towards bigger goals (adve
 
 ## How to Adventure
 
-1. Launch the page at [https://spencerwbarnes.github.io/An-Adventurers-Life/](https://spencerwbarnes.github.io/An-Adventurers-Life/) 
-2. Click '+' on tasks as you complete them, some may only be doable once and others multiple times in a day.
-3. Check your coin balances in the bottom footer
-4. Keep up your task tracking and every day at 3:00 AM your coin balances will be updated and task completions reset for a new day.
+1. Launch the page at [https://spencerwbarnes.github.io/An-Adventurers-Life/](https://spencerwbarnes.github.io/An-Adventurers-Life/)
+2. If on a mobile device, is the tabs to select the different task types.
+3. Click '+' on tasks as you complete them, some may only be doable once and others multiple times in a day.
+4. Check your coin balances in the bottom footer
+5. Keep up your task tracking and every day at 3:00 AM your coin balances will be updated and task completions reset for a new day.
 
 ### Customization options:
 
@@ -40,7 +41,7 @@ This project is a small React + TypeScript static app intended to be hosted on G
 
 Each section shows a dynamic grid of items which can be customized by clicking the pencil icon next to the page's title. The player stats footer shows the coin balance changes for the current day and can be edited by clicking the pencil icon next in the footer.
 
-If the page width is 900 pixels or higher, the three sections are shown as three separate columns. If the page width is smaller than that, then a tab bar appears with three tabs each correlating to one of the sections with only the currently selected section appearing below the tab bar.
+If the page width is large enough, the three sections are shown as three separate columns. If the page width is small then a tab bar appears with three tabs each correlating to one of the sections with only the currently selected section appearing below the tab bar.
 
 Quick start
 
@@ -77,10 +78,11 @@ npm run deploy
 
 - CurrentDayProvider
   - App
-    - Sections (Can add new action items)
-      - ItemCards
-        - ReadonlyItemCards (Can update counts for action items)
-        - EditableItemCards (Can delete action items or update label, favorite status, prices, and order of action items)
+    - TabsPane
+      - Sections (Can add new action items)
+        - ItemCards
+          - ReadonlyItemCards (Can update counts for action items)
+          - EditableItemCards (Can delete action items or update label, favorite status, prices, and order of action items)
     - Footer (Can modify Player data)
 
 ## Attributions
