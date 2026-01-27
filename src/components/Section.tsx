@@ -1,17 +1,29 @@
 import { useMemo } from "react";
 import { Action, ActionType } from "../types";
-import ItemCard from "./ItemCard/ItemCard";
+import ItemCard from "./ItemCards/ItemCard";
 import Tooltip from "./Tooltip";
 import { useCurrentDay } from "../CurrentDayContext";
+import InformationIcon from "./Icons/InformationIcon";
 
-type Props = {
+type HeaderedProps = {
   title: string
   type: ActionType
   description: string
   isEditable?: boolean
 }
 
-export default function Section({ title, type, description, isEditable = false }: Props) {
+type HeaderlessProps = {
+  type: ActionType
+  isEditable?: boolean
+}
+
+export default function Section(props: HeaderedProps | HeaderlessProps) {
+  const isHeaderless = (props as any).title === undefined;
+  const title = isHeaderless ? "" : (props as HeaderedProps).title;
+  const description = isHeaderless ? "" : (props as HeaderedProps).description;
+  const type = props.type;
+  const isEditable = props.isEditable || false;
+
   const {
     currentDay,
     createAction,
@@ -40,19 +52,17 @@ export default function Section({ title, type, description, isEditable = false }
   }
 
   return (
-    <section className="section">
-      <header className="section-header">
-        <h2>{title}</h2>
-        <Tooltip content={description}>
-          <button className="info" aria-label={`${title} info`}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="12" cy="16" r="0.75" fill="currentColor" />
-            </svg>
-          </button>
-        </Tooltip>
-      </header>
+    <section className={`section ${isHeaderless ? "headerless" : ""}`}>
+      {!isHeaderless && (
+        <header className="section-header">
+          <h2>{title}</h2>
+          <Tooltip content={description}>
+            <button className="info" aria-label={`${title} info`}>
+              <InformationIcon />
+            </button>
+          </Tooltip>
+        </header>
+      )}
 
       <div className="grid">
         {actions.map((a) => (
