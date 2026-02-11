@@ -53,7 +53,7 @@ export default function EditableItemCard({ action, onChange, onDelete, onReorder
       </div>
       
       <div className="label">
-        <input value={action.label} onChange={(e) => setLabel(e.target.value)} />
+        <input value={action.label} placeholder="🗡️Action name" onChange={(e) => setLabel(e.target.value)} />
       </div>
 
       <div className="item-toolbar">

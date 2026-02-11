@@ -77,7 +77,7 @@ export const CurrentDayProvider: React.FC<{ children: ReactNode }> = ({ children
     }
     const newAction: Action = {
       id: crypto.randomUUID(),
-      label: "New Item",
+      label: "",
       price: EMPTY_CURRENCY(),
       count: 0,
       isFavorite: false,
